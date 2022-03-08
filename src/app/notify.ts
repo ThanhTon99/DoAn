@@ -1,4 +1,7 @@
+
+
 export class NotifyModel{
+
     id : number = 0;
     title : string = '';
     description : string = '';
@@ -7,5 +10,7 @@ export class NotifyModel{
     end : string = '';  
     login: string = '';
     display: string = '';
-    //file: string | any;
+    activate: boolean | undefined;
+  //  file: string = '';
+
 }

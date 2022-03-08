@@ -39,13 +39,14 @@ export class LoginComponent implements OnInit {
       accout: [''],
       password: [''],
       login: ['truoc'],
+      activate: true,
     })
     this.api.getNotify().subscribe(res => {
       this.notifyData = res;
     })
     this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
       const time = res.find((a: any) => {
-        return a.login === this.loginForm.value.login
+        return a.login === this.loginForm.value.login && a.activate === this.loginForm.value.activate
       })
       if (time) {
         this.open(this.content)
@@ -72,12 +73,12 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['dashboard'])
           this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
             const time = res.find((a: any) => {
-              return a.login == ['truoc']
+              return a.login == ['sau'] && a.activate == true
             })
             if (time) {
-              this.getAllNotify
-            } else {
               this.open(this.content)
+            } else {
+              this.getAllNotify
             }
           })
         } else {
