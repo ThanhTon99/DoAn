@@ -2,24 +2,30 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
 import { map } from 'rxjs/operators';
 import { NotifyModel } from './notify';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
   url = "http://localhost:3000/posts"
-  item : NotifyModel[] = [];
+  private messageSource = new BehaviorSubject('Message From Service');
+  currentMessage = this.messageSource.asObservable();
 
   constructor(
     private http: HttpClient,
   ) { }
   
-  getItems(){
-    return this.item
+  changeMessage(msg:string){
+    this.messageSource.next(msg);
   }
-
   getNotify(){
     return this.http.get(this.url).pipe(map((res:any)=>{
+      return res
+    }))
+  }
+  getNotifyByActivate(){
+    return this.http.get(`${this.url}?activate=true`).pipe(map((res:any)=>{
       return res
     }))
   }

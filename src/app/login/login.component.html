@@ -6,7 +6,6 @@
 </head>
 
 <body>
-  <app-notify-manage [parentClick]="parentClick"></app-notify-manage>
   <div class="background"></div>
   <div class="ribbon">
     <div class="text-center">
@@ -146,7 +145,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button (click)="onParentButtonClick()" type="button" class="btn btn-primary"
+        <button (click)="newMessage()" type="button" class="btn btn-primary"
           (click)="modal.close('Save click')">
           Đã Xem
         </button>

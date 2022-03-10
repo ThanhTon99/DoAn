@@ -1,5 +1,29 @@
+<h3 id="i" class=" mt-3">Thông Báo</h3>
+<div class="container-fluid">
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col">Notify ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Start</th>
+        <th scope="col">End</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of notifyData">
+        <td>{{row.id}}</td>
+        <td>{{row.title}}</td>
+        <!-- <td><div [innerHtml]="row.content"></div></td> -->
+        <td>{{row.description}}</td>
+        <td>{{row.start | date:'dd/MM/Y'}}</td>
+        <td>{{row.end | date:'dd/MM/Y'}}</td>
+        <td id="status">{{message}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <div class="container-fluid">
-    Parent Click cout: {{clickCount}} 
-  </div>
+
 

@@ -12,9 +12,9 @@
     <div class="container-fluid">
       <h1 style="color: aliceblue;">Angular CRUD</h1>
       <div class="d-flex">
+        <button routerLink="/notifymanage" class="btn btn-light mx-2"><i class="fas fa-bell"></i></button>      
         <button (click)="clickAddNotify()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-          class="btn btn-success">Add
-          Notify</button>
+          class="btn btn-success">Add Notify</button>
         <button routerLink="/login" class="btn btn-danger mx-2">Logout</button>
       </div>
     </div>
@@ -38,8 +38,8 @@
           <td>{{row.title}}</td>
           <!-- <td><div [innerHtml]="row.content"></div></td> -->
           <td>{{row.description}}</td>
-          <td>{{row.start}}</td>
-          <td>{{row.end}}</td>
+          <td>{{row.start | date:'dd/MM/Y'}}</td>
+          <td>{{row.end | date:'dd/MM/Y'}}</td>
           <td>
             <button (click)="onEdit(row)" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
               class="btn btn-info">Edit</button>
@@ -61,9 +61,9 @@
         <div class="modal-body">
           <form [formGroup]="formValue" >
             <div class="card-body">
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-12 ">
                 <label for="title">Title<a id="sao"> (*)</a></label>
-                <input type="text" required formControlName="title"
+                <input [class.is-invalid]="formValue.invalid && formValue.touched" type="text" required formControlName="title"
                  class="form-control" name="title" placeholder="Tiêu Đề">
                 <small *ngIf="formValue.invalid && formValue.touched" class="form-text text-danger">Yêu cầu điền thông tin</small>
               </div>
@@ -93,7 +93,7 @@
                     <option value="thong bao" selected="selected" >Thông Báo</option>
                     <option value="slide anh">Slide Ảnh</option>
                   </select>
-                  <small class="form-text text-muted">Chọn kiểu hiển thị</small>
+                  <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu hiển thị</small>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -102,7 +102,7 @@
                     <option value="truoc">Trước Khi Đăng Nhập</option>
                     <option value="sau">Sau Khi Đăng Nhập</option>
                   </select>
-                  <small class="form-text text-muted">Chọn kiểu thông báo</small>
+                  <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu thông báo</small>
                 </div>
               </div>
 
@@ -130,7 +130,7 @@
 
               <div class="form-row">
                 <div class="form-group col-md-4">
-                  <label for="formFile" class="form-label">Đính Kèm<input class="form-control" type="file"
+                  <label for="formFile" class="form-label">Đính Kèm<input class="form-control" type="file" 
                       id="formFile"></label>
                 </div>
                 <div class="form-group col-md-4">
@@ -153,38 +153,6 @@
     </div>
   </div>
 
-  <!-- POPUP -->
-  <div class="modal" id="myModal">
-    <ng-template #content let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">
-          Thông Báo
-        </h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true"> × </span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div *ngFor="let row of notifyData">
-            <div [innerHtml]="row.content"></div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button (click)="onParentButtonClick()" type="button" class="btn btn-primary" (click)="modal.close('Save click')">
-          Đã Xem
-        </button>
-      </div>
-    </ng-template>
-  </div>
-  <h3>Cart</h3>
-
-  <div class="cart-item" *ngFor="let item of items">
-    <span>{{ item.title }}</span>
-   
-    {{ todaydate | date: 'hh:mm, dd-MM-y' }}
-  </div>
   <!-- <div class="cart-item" *ngFor="let item of notifyData">
     <span>{{item.title}}</span>
     {{ todaydate | date: 'hh:mm, dd-MM-y' }}

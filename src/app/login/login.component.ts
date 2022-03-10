@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../api.service';
 import { NotifyModel } from '../notify';
-import { Subject } from 'rxjs';
+import { mergeWith, Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,15 +23,13 @@ export class LoginComponent implements OnInit {
   closeResult = '';
   todaydate = new Date();
   parentClick: Subject<void> = new Subject<void>()
-  notify !: NotifyModel
+  
   constructor(
-
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private modalService: NgbModal,
     private api: ApiService,
-
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +39,7 @@ export class LoginComponent implements OnInit {
       login: ['truoc'],
       activate: true,
     })
-    this.api.getNotify().subscribe(res => {
+    this.api.getNotifyByActivate().subscribe(res => {
       this.notifyData = res;
     })
     this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
@@ -55,12 +53,9 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-  onParentButtonClick() {
-    this.parentClick.next()
-  }
-  add(events: NotifyModel, id : any){
-    debugger
-    this.api.updateNotify(events, id)
+
+  newMessage() {
+    this.api.changeMessage(`Đã Xem | ${this.todaydate.toLocaleString()}`)
   }
   login() {
     this.http.get<any>("http://localhost:3000/signupUsers")
@@ -87,14 +82,12 @@ export class LoginComponent implements OnInit {
       }, err => {
         alert("Something Wrong !!!")
       })
-
   }
 
   getAllNotify() {
     this.api.getNotify().subscribe(res => {
       this.notifyData = res;
-    }
-    )
+    })
   }
   open(content: any) {
     this.modalService.open(content,

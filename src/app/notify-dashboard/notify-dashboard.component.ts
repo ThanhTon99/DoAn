@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ApiService } from '../api.service';
+import { LoginComponent } from '../login/login.component';
 import { NotifyModel } from '../notify';
 @Component({
   selector: 'app-notify-dashboard',
@@ -24,13 +25,12 @@ export class NotifyDashboardComponent implements OnInit {
   closeResult = ''
   todaydate = new Date()
   parentClick: Subject<void> = new Subject<void>()
-  items = this.api.getItems();
+  message : any;
 
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
     private modalService: NgbModal,
-
   ) { }
 
   ngOnInit(): void {
@@ -42,35 +42,11 @@ export class NotifyDashboardComponent implements OnInit {
       end: [''],
       login: [''],
       display: [''],
- //     file: [],
+      activate: true,
+      //file: [''],
     })
-
-    this.api.getNotify().subscribe(res => {
-      this.notifyData = res
-      //this.open(this.content)
-    })
-  }
-
-  onParentButtonClick() {
-    this.parentClick.next()
-  }
-  
-  open(content: any) {
-    this.modalService.open(content,
-      { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      })
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+    this.getAllNotify();
+    this.api.currentMessage.subscribe(message => this.message = message)
   }
 
   clickAddNotify() {
@@ -87,7 +63,8 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.end = this.formValue.value.end
     this.notifyModelObj.login = this.formValue.value.login
     this.notifyModelObj.display = this.formValue.value.display
-  //  this.notifyModelObj.file = this.formValue.value.file
+    this.notifyModelObj.activate = this.formValue.value.activate
+    //this.notifyModelObj.file = this.formValue.value.file
 
     this.api.postNotify(this.notifyModelObj).subscribe(res => {
       console.log(res);
@@ -123,7 +100,9 @@ export class NotifyDashboardComponent implements OnInit {
     this.formValue.controls['end'].setValue(row.end)
     this.formValue.controls['login'].setValue(row.login)
     this.formValue.controls['display'].setValue(row.display)
+    this.formValue.controls['activate'].setValue(row.activate)
    // this.formValue.controls['file'].setValue(row.file)
+
   }
   updateNotifyDatails() {
     this.notifyModelObj.title = this.formValue.value.title
@@ -133,7 +112,8 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.end = this.formValue.value.end
     this.notifyModelObj.login = this.formValue.value.login
     this.notifyModelObj.display = this.formValue.value.display
-   // this.notifyModelObj.file = this.formValue.value.file
+    this.notifyModelObj.activate = this.formValue.value.activate
+    //this.notifyModelObj.file = this.formValue.value.file
 
     this.api.updateNotify(this.notifyModelObj, this.notifyModelObj.id)
       .subscribe(res => {

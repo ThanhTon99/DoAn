@@ -10,21 +10,11 @@ import { ApiService } from './api.service';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('content') content !: boolean;
-  closeResult = '';
   title = 'AngularCRUD';
-  todaydate = new Date()
-  notifyData : any
-  parentClick: Subject<void> = new Subject<void>()
-  constructor(
-      private modalService: NgbModal,
-      private api: ApiService,
-  ) { }
+  constructor() { }
   
   ngOnInit(): void {
-        this.api.getNotify().subscribe(res => {
-        this.notifyData = res
-      })
+    
     }
 
 

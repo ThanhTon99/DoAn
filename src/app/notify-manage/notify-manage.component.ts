@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ApiService } from '../api.service';
 
@@ -8,22 +9,34 @@ import { ApiService } from '../api.service';
   styleUrls: ['./notify-manage.component.css']
 })
 export class NotifyManageComponent implements OnInit {
+  notifyData: any
+  message : any;
+  formValue !: FormGroup
 
-  clickCount = [''];
-  
-  todaydate = new Date()
-  notifyData = this.api.getNotify()
-  @Input() parentClick?: Subject<void>
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit():void {
-    this.parentClick?.subscribe(() => this.incrementValue())
-  }
+    this.formValue = this.formBuilder.group({
+      title: [''],
+      description: [''],
+      content: [''],
+      start: [''],
+      end: [''],
+      login: [''],
+      display: [''],
+      activate: true,
+      //file: [''],
+    })
+    this.getAllNotify();
+    this.api.currentMessage.subscribe(message => this.message = message)
 
-  incrementValue(){
-    return this.clickCount = [this.todaydate + ' ĐÃ XEM'] 
-  }
-  
+}
+getAllNotify() {
+  this.api.getNotify().subscribe(res => {
+    this.notifyData = res
+  })
+}
 }
