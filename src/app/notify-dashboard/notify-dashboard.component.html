@@ -21,7 +21,7 @@
   </nav>
 
   <div class="container-fluid">
-    <table class="table mt-3">
+    <table class="table table-bordered mt-3">
       <thead>
         <tr>
           <th scope="col">Notify ID</th>
@@ -89,9 +89,9 @@
                 <div class="form-group col-md-4">
                   <label>Kiểu Hiển Thị</label>
                   <select class="form-control" formControlName="display">
-                    <option value="tin tuc" >Tin Tức</option>
-                    <option value="thong bao" selected="selected" >Thông Báo</option>
-                    <option value="slide anh">Slide Ảnh</option>
+                    <option value="tintuc" >Tin Tức</option>
+                    <option value="thongbao" selected="selected" >Thông Báo</option>
+                    <option value="slide">Slide Ảnh</option>
                   </select>
                   <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu hiển thị</small>
                 </div>

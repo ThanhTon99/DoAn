@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
   notifyData: any;
   closeResult = '';
   todaydate = new Date();
-  parentClick: Subject<void> = new Subject<void>()
-  
+  showWatched !: boolean;
+  showOut !: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
       accout: [''],
       password: [''],
       login: ['truoc'],
+      display: [''],
       activate: true,
     })
     this.api.getNotifyByActivate().subscribe(res => {
@@ -45,10 +46,23 @@ export class LoginComponent implements OnInit {
     this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
       const time = res.find((a: any) => {
         return a.login === this.loginForm.value.login && a.activate === this.loginForm.value.activate
+          && a.display == ['tintuc']
+      })
+      const time2 = res.find((a: any) => {
+        return a.login === this.loginForm.value.login && a.activate === this.loginForm.value.activate
+          && a.display == ['thongbao']
       })
       if (time) {
         this.open(this.content)
-      } else {
+        this.showWatched = false
+        this.showOut = true
+      }
+      else if (time2) {
+        this.open(this.content)
+        this.showWatched = true
+        this.showOut = false
+      }
+      else {
         this.getAllNotify
       }
     })
@@ -68,10 +82,19 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['dashboard'])
           this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
             const time = res.find((a: any) => {
-              return a.login == ['sau'] && a.activate == true
+              return a.login == ['sau'] && a.activate == true && a.display == ['tintuc']
+            })
+            const time2 = res.find((a: any) => {
+              return a.login == ['sau'] && a.activate == true && a.display == ['thongbao']
             })
             if (time) {
               this.open(this.content)
+              this.showWatched = false
+              this.showOut = true
+            } else if (time2) {
+              this.open(this.content)
+              this.showWatched = true
+              this.showOut = false
             } else {
               this.getAllNotify
             }

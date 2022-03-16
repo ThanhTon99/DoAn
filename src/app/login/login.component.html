@@ -145,9 +145,11 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button (click)="newMessage()" type="button" class="btn btn-primary"
-          (click)="modal.close('Save click')">
-          Đã Xem
+        <button (click)="newMessage()" type="button" *ngIf="showWatched" class="btn btn-primary"
+          (click)="modal.close('Save click')"> Đã Xem
+        </button>
+        <button type="button" class="btn btn-danger" *ngIf="showOut" (click)="modal.close('Save click')">
+          Thoát
         </button>
       </div>
     </ng-template>

@@ -6,3 +6,8 @@
     max-width: 800px;
     margin: 0 auto;
 }
+.table-bordered{
+    width: 80%;
+    position: relative;
+    margin-left: 12%;
+}

@@ -6,3 +6,8 @@
 #status{
     color: rgb(75, 105, 202);
 }
+.table-bordered{
+    width: 80%;
+    position: relative;
+    margin-left: 12%;
+}
