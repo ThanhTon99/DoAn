@@ -10,10 +10,9 @@ body {
     width: 100%;
     height: 100%;
     position: fixed; 
-    background-color: #e0ecf5;
-    /* background-image: url(./undraw_remotely_2j6y.svg); */
+    background-image: url(https://lumiere-a.akamaihd.net/v1/images/sa_pixar_virtualbg_toystory_16x9_8461039f.jpeg);
     background-repeat: no-repeat;
-    background-size: 39%;  
+    background-size: cover;  
 }
 .content {
     width: 960px;
@@ -23,16 +22,14 @@ body {
 }
 
 .ribbon {
-    border-radius: 10px;
-    top: 100px;
-    width: 384px;
+    border-radius: 20px;
+    margin-top: 73px;
+    width: 320px;
     height: 450px;
     position: fixed;
     right: 10%; 
     background-color: #2d80ce;
-    background-repeat: no-repeat;
     background-size: 100%;
-    background-position: 0 -12px;
 }
 
 a {
@@ -48,17 +45,6 @@ a {
     color: #131212;
 }
 
-.tel {
-    position: absolute;
-    top: 17px;
-    left: 134px;
-}
-
-.site {
-    position: absolute;
-    top: 17px;
-    left: 238px;
-}
 
 .input {
     background: transparent;
@@ -73,7 +59,7 @@ a {
 .username {
     position: absolute;
     top: 170px;
-    left: 76px;
+    left: 45px;
     border-radius: 5px;
     background-color: #fafafa;
 }
@@ -81,7 +67,7 @@ a {
 .password {
     position: absolute;
     top: 225px;
-    left: 76px;
+    left: 45px;
     border-radius: 5px;
     background-color: #fafafa;
 }
@@ -91,7 +77,7 @@ a {
     border: none;
     outline: none;
     top: 310px;
-    left: 76px;
+    left: 46px;
     height: 38px;
     width: 236px;
     border-radius: 19px;
@@ -106,54 +92,26 @@ a {
         background: #b2d24b;
     }
 
-.remember {
-    position: absolute;
-    top: 279px;
-    left: 81px;
-    color: #0c0c0c;
-}
-    .remember input {
-        margin: 0;
-        top: 2px;
-        position: relative;
-    }
 .signup1{
     position: absolute;
     top: 280px;
-    left: 115px;
+    left: 85px;
     color: #0c0c0c;
 }
-.forgot {
-    position: absolute;
-    top: 279px;
-    left: 223px;
-}
 
-.profile-image-pic{
-    height: 100px;
-    width: 100px;
-    object-fit: cover;
-  }
   
-@media only screen and (max-width: 767px) {
-    .content {
-        width: 100%;
-        padding-left: 0;
-    }
-
-    .intro {
-        display: none;
-    }
-
+@media only screen and (max-width: 100px) {
     .ribbon {
-        max-width: 384px;
+        max-width: 100px;
         margin: 0 auto;
         position: relative;
     }
 }
 
 /* ------- Slide Show ------- */
-
+.carousel{
+    border-left: 100px;
+}
 .cards-wrapper {
   display: flex;
   justify-content: center;
@@ -168,9 +126,7 @@ a {
   border: none;
   border-radius: 0;
 }
-.carousel-inner {
-  padding: 1em;
-}
+
 .carousel-control-prev,
 .carousel-control-next {
   background-color: #e1e1e1;
@@ -180,9 +136,9 @@ a {
   top: 50%;
   transform: translateY(-50%);
 }
-@media (min-width: 768px) {
+@media (min-width: 1000px) {
   .card img {
-    max-height: 40em;
+    max-height: 42em;
   }
 }
 .btn{
@@ -190,9 +146,10 @@ a {
 }
 #carouselExampleControls{
     position: fixed;  
-    margin-top: 40px;
-    left: 5%;
+    margin-top: 60px;
+    left: 8%;
     width: 60%;
-    max-width: 900px;
-    max-height: 900px;
+    max-width: 1000px;
+    max-height: 1000px;
 }
+

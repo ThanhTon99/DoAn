@@ -6,6 +6,14 @@
 </head>
 
 <body>
+  <nav class="navbar " style="background: linear-gradient(to right, rgb(36, 49, 105), rgb(7, 171, 226));">
+    <div class="container-fluid">
+      <h1 title="Angular" style="color: aliceblue;">Angular CRUD</h1>
+      <div class="d-flex">
+        <h2 title="Tên" style="color: aliceblue">Tonnt</h2>
+      </div>
+    </div>
+  </nav>
   <div class="background"></div>
   <div class="ribbon">
     <div class="text-center">
@@ -15,9 +23,9 @@
     <form action="/?r=1900535053" method="post" [formGroup]="loginForm" (ngSubmit)="login()">
       <input name="__RequestVerificationToken" type="hidden">
       <span class="field-validation-valid error" data-valmsg-for="Username" data-valmsg-replace="true"></span>
-      <input formControlName="accout" autocomplete="off" class="input username" id="Username" name="Username"
+      <input formControlName="Username" autocomplete="off" class="input username" id="Username" name="Username"
         placeholder="Tên đăng nhập" type="text" value="">
-      <input formControlName="password" autocomplete="off" class="input password" id="Password" name="Password"
+      <input formControlName="Password" autocomplete="off" class="input password" id="Password" name="Password"
         placeholder="Mật khẩu" type="password">
       <!-- <label class="remember">
         <input data-val="true" data-val-required="The RememberMe field is required." id="RememberMe" name="RememberMe"
@@ -31,104 +39,48 @@
     </form>
   </div>
 
-  <!-- Slide Show -->
-
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <!-- carousel-fade -->
+  <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    
+    <ul class="carousel-indicators">
+     <li data-target="#carouselExampleControls" data-slide-to="0"></li>
+      <li data-target="#carouselExampleControls" data-slide-to="1"></li>
+      <li data-target="#carouselExampleControls" data-slide-to="2"></li>
+      <li data-target="#carouselExampleControls" data-slide-to="3"></li> 
+       <li data-target="#carouselExampleControls" data-slide-to="4"></li>
+    </ul>
+    
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item" *ngFor="let row of notifyImage">
         <div class="cards-wrapper">
           <div class="card">
-            <a href="https://pixabay.com/photos/cat-animal-cat-portrait-cat-s-eyes-1045782/" target="_blank">
-              <img src="https://cdn.pixabay.com/photo/2015/11/16/14/43/cat-1045782_960_720.jpg" class="card-img-top"
-                alt="Cat"></a>
-            <div class="card-body">
-              <h5 class="card-title">Mèo</h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p> -->
-              <a href="https://pixabay.com/photos/cat-animal-cat-portrait-cat-s-eyes-1045782/" target="_blank"
-                class="btn btn-primary">Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="cards-wrapper">
-          <div class="card">
-            <a href="https://pixabay.com/photos/dolphin-animal-sea-ocean-203875/" target="_blank"><img
-                src="https://cdn.pixabay.com/photo/2013/11/01/11/13/dolphin-203875_960_720.jpg" class="card-img-top"
-                alt="Dolphin"></a>
-            <div class="card-body">
-              <h5 class="card-title">Cá Heo</h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p> -->
-              <a href="https://pixabay.com/photos/dolphin-animal-sea-ocean-203875/" target="_blank"
-                class="btn btn-primary">Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="cards-wrapper">
-          <div class="card">
-            <a href="https://pixabay.com/photos/swan-water-bird-lake-white-swan-2077219/" target="_blank"><img
-                src="https://cdn.pixabay.com/photo/2017/02/18/13/55/swan-2077219_960_720.jpg" class="card-img-top"
-                alt="Thiên Nga"></a>
-            <div class="card-body">
-              <h5 class="card-title">Thiên Nga</h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p> -->
-              <a href="https://pixabay.com/photos/swan-water-bird-lake-white-swan-2077219/" target="_blank"
-                class="btn btn-primary">Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="cards-wrapper">
-          <div class="card">
-            <a href="https://pixabay.com/photos/lion-animal-mammal-predator-mane-3576045/" target="_blank"><img
-                src="https://cdn.pixabay.com/photo/2018/07/31/22/08/lion-3576045_960_720.jpg" class="card-img-top"
-                alt="Thiên Nga"></a>
-            <div class="card-body">
-              <h5 class="card-title">Sư Tử</h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p> -->
-              <a href="https://pixabay.com/photos/lion-animal-mammal-predator-mane-3576045/" target="_blank"
-                class="btn btn-primary">Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="cards-wrapper">
-          <div class="card">
-            <a href="https://pixabay.com/photos/kingfisher-bird-close-up-perched-2046453/" target="_blank"><img
-                src="https://cdn.pixabay.com/photo/2017/02/07/16/47/kingfisher-2046453_960_720.jpg" class="card-img-top"
-                alt="Thiên Nga"></a>
-            <div class="card-body">
-              <h5 class="card-title">Bói Cá</h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p> -->
-              <a href="https://pixabay.com/photos/kingfisher-bird-close-up-perched-2046453/" target="_blank"
-                class="btn btn-primary">Chi Tiết</a>
-            </div>
+            <a href="{{row.Link}}" target="_blank">
+              <img  src="http://localhost:57050/Photos/{{row.PhotoFileName}}"></a>
           </div>
         </div>
       </div>
     </div>
+    <div class="carousel-item active">
+    </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
     </a>
     <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
     </a>
-  </div>
+  </div> -->
+
+  <!-- Slide Show -->
+  <carousel [noWrap]="false" [isAnimated]="true" [interval]="5000" style=" display:block; width: 60%; margin-left: 5%; ">
+    <slide class="container" *ngFor="let row of notifyImage" style="margin-left: 11%; margin-top: 8%;">
+      <a href="{{row.Link}}" target="_blank">
+      <img  src="http://localhost:57050/Photos/{{row.PhotoFileName}}" style="height: 550px; width: 800px;"></a>
+    </slide>
+  </carousel>
 
   <!-- POPUP -->
-  <div class="modal" id="myModal">
-    <ng-template #content let-modal>
+  <div class="modal-dialog modal-lg" id="myModal">
+    <ng-template #content let-modal >
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">
           Thông Báo
@@ -140,13 +92,13 @@
       <div class="modal-body">
         <form>
           <div *ngFor="let row of notifyData">
-            <div [innerHtml]="row.content"></div>
+            <div [innerHtml]="row.Content"></div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button (click)="newMessage()" type="button" *ngIf="showWatched" class="btn btn-primary"
-          (click)="modal.close('Save click')"> Đã Xem
+          (click)="modal.close()"> Đã Xem
         </button>
         <button type="button" class="btn btn-danger" *ngIf="showOut" (click)="modal.close('Save click')">
           Thoát
@@ -154,7 +106,6 @@
       </div>
     </ng-template>
   </div>
-  
 </body>
 
 </html>

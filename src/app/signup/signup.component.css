@@ -139,45 +139,12 @@ a {
     }
 }
 
-/* ------- Slide Show ------- */
-
-.cards-wrapper {
-  display: flex;
-  justify-content: center;
-}
-.card img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.card {
-  margin: 0 0.5em;
-  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-  border: none;
-  border-radius: 0;
-}
-.carousel-inner {
-  padding: 1em;
-}
-.carousel-control-prev,
-.carousel-control-next {
-  background-color: #e1e1e1;
-  width: 5vh;
-  height: 5vh;
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-@media (min-width: 768px) {
-  .card img {
-    height: 25em;
-  }
-}
-.btn{
-    color: #e0ecf5;
-}
-#carouselExampleControls{
-    position: fixed;  
-    margin-top: 90px;
-    left: 15%;
-    width: 35%;
+.background {
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    position: fixed; 
+    background-image: url(https://lumiere-a.akamaihd.net/v1/images/sa_pixar_virtualbg_toystory_16x9_8461039f.jpeg);
+    background-repeat: no-repeat;
+    background-size: 100%;  
 }

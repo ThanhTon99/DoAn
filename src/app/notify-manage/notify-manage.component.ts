@@ -9,34 +9,21 @@ import { ApiService } from '../api.service';
   styleUrls: ['./notify-manage.component.css']
 })
 export class NotifyManageComponent implements OnInit {
-  notifyData: any
-  message : any;
-  formValue !: FormGroup
-
+  notifyData: any;
+  message: any;
+  notifyMessage:any;
   constructor(
     private api: ApiService,
-    private formBuilder: FormBuilder,
   ) { }
 
-  ngOnInit():void {
-    this.formValue = this.formBuilder.group({
-      title: [''],
-      description: [''],
-      content: [''],
-      start: [''],
-      end: [''],
-      login: [''],
-      display: [''],
-      activate: true,
-      //file: [''],
+  ngOnInit(): void {
+    this.api.getNotify().subscribe(res => {
+      this.notifyData = res
     })
-    this.getAllNotify();
+    this.api.getMessage().subscribe(res=>{
+      this.notifyMessage = res;
+    })
     this.api.currentMessage.subscribe(message => this.message = message)
+  }
 
-}
-getAllNotify() {
-  this.api.getNotify().subscribe(res => {
-    this.notifyData = res
-  })
-}
 }

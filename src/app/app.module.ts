@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,15 +10,15 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ApiService } from './api.service';
 import { NotifyManageComponent } from './notify-manage/notify-manage.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 @NgModule({
-  declarations: [				
+  declarations: [					
     AppComponent,
       NotifyDashboardComponent,
       LoginComponent,
       SignupComponent,
       NotifyManageComponent,
-      
    ],
   imports: [
     BrowserModule,  
@@ -26,8 +26,9 @@ import { NotifyManageComponent } from './notify-manage/notify-manage.component';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule, 
-    CKEditorModule, 
+    CKEditorModule, CarouselModule.forRoot(), 
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [ApiService],
   bootstrap: [AppComponent] 
 })

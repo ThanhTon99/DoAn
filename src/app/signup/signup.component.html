@@ -1,3 +1,12 @@
+<nav class="navbar " style="background: linear-gradient(to right, rgb(36, 49, 105), rgb(7, 171, 226));">
+  <div class="container-fluid">
+    <h1 style="color: aliceblue;">Angular CRUD</h1>
+    <div class="d-flex">
+      <h2 style="color: aliceblue">Tonnt</h2>
+    </div>
+  </div>
+</nav>
+<div class="background"></div>
 <div class="ribbon">
   <div class="text-center">
     <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
@@ -6,7 +15,7 @@
   <form action="/?r=1900535053" method="post" [formGroup]="signupForm" (ngSubmit)="signUp()">
     <input name="__RequestVerificationToken" type="hidden">
     <span class="field-validation-valid error" data-valmsg-for="Username" data-valmsg-replace="true"></span>
-    <input formControlName="accout" autocomplete="off" class="input username" id="Username" name="Username"
+    <input formControlName="username" autocomplete="off" class="input username" id="Username" name="Username"
       placeholder="Tên đăng nhập" type="text" value="">
     <input formControlName="password" autocomplete="off" class="input password" id="Password" name="Password"
       placeholder="Mật khẩu" type="password">

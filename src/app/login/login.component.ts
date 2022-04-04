@@ -1,13 +1,11 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../api.service';
 import { NotifyModel } from '../notify';
-import { mergeWith, Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,42 +14,51 @@ import { mergeWith, Subject } from 'rxjs';
 export class LoginComponent implements OnInit {
 
   public loginForm!: FormGroup;
-  public notifyModel!: NotifyModel;
+  notifyModel!: NotifyModel;
 
   @ViewChild('content') content: any;
-  notifyData: any;
+  urls: string[] = [];
+  notifyData : any ;
+  notifyImage: any;
   closeResult = '';
   todaydate = new Date();
   showWatched !: boolean;
   showOut !: boolean;
+  
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private modalService: NgbModal,
     private api: ApiService,
+    
   ) { }
-
+  
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      accout: [''],
-      password: [''],
-      login: ['truoc'],
-      display: [''],
-      activate: true,
+      Username: [''],
+      Password: [''],
+      Login: ['truoc'],
+      Display: [''],
+      Activate: true,    
+    })
+    
+    this.api.getImage().subscribe(res=>{
+      this.notifyImage = res
     })
     this.api.getNotifyByActivate().subscribe(res => {
       this.notifyData = res;
+      //this.open(this.content)
     })
-    this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
+    this.http.get<any>("http://localhost:57050/api/notify").subscribe(res => {
       const time = res.find((a: any) => {
-        return a.login === this.loginForm.value.login && a.activate === this.loginForm.value.activate
-          && a.display == ['tintuc']
+        return a.Login === this.loginForm.value.Login && a.Activate === this.loginForm.value.Activate
+          && a.Display == ['tintuc']
       })
       const time2 = res.find((a: any) => {
-        return a.login === this.loginForm.value.login && a.activate === this.loginForm.value.activate
-          && a.display == ['thongbao']
-      })
+        return a.Login === this.loginForm.value.Login && a.Activate === this.loginForm.value.Activate
+          && a.Display == ['thongbao']
+      })     
       if (time) {
         this.open(this.content)
         this.showWatched = false
@@ -61,34 +68,37 @@ export class LoginComponent implements OnInit {
         this.open(this.content)
         this.showWatched = true
         this.showOut = false
-      }
+      }  
       else {
-        this.getAllNotify
+        this.getAllNotify()
       }
     })
   }
-
   newMessage() {
-    this.api.changeMessage(`Đã Xem | ${this.todaydate.toLocaleString()}`)
+    this.api.changeMessage(`Đã Xem | ${this.todaydate.toLocaleString()}`);
   }
+
   login() {
-    this.http.get<any>("http://localhost:3000/signupUsers")
+    this.api.getNotifyByActivate1().subscribe(res => {
+      this.notifyData = res;
+    })
+    this.http.get<any>("http://localhost:57050/api/department")
       .subscribe(res => {
         const user = res.find((a: any) => {
-          return a.accout === this.loginForm.value.accout && a.password === this.loginForm.value.password
+          return a.Username === this.loginForm.value.Username && a.Password === this.loginForm.value.Password
         })
         if (user) {
           this.loginForm.reset()
           this.router.navigate(['dashboard'])
-          this.http.get<any>("http://localhost:3000/posts").subscribe(res => {
+          this.http.get<any>("http://localhost:57050/api/notify").subscribe(res => {
             const time = res.find((a: any) => {
-              return a.login == ['sau'] && a.activate == true && a.display == ['tintuc']
+              return a.Login == ['sau'] && a.Activate == true && a.Display == ['tintuc']
             })
             const time2 = res.find((a: any) => {
-              return a.login == ['sau'] && a.activate == true && a.display == ['thongbao']
+              return a.Login == ['sau'] && a.Activate == true && a.Display == ['thongbao']
             })
             if (time) {
-              this.open(this.content)
+              this.open(this.content);
               this.showWatched = false
               this.showOut = true
             } else if (time2) {
@@ -96,7 +106,7 @@ export class LoginComponent implements OnInit {
               this.showWatched = true
               this.showOut = false
             } else {
-              this.getAllNotify
+              this.getAllNotify()
             }
           })
         } else {
@@ -112,7 +122,7 @@ export class LoginComponent implements OnInit {
       this.notifyData = res;
     })
   }
-  open(content: any) {
+  open(content:any) {
     this.modalService.open(content,
       { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
@@ -129,4 +139,5 @@ export class LoginComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
 }

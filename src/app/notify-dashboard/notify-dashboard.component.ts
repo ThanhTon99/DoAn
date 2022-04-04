@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { LoginComponent } from '../login/login.component';
 import { NotifyModel } from '../notify';
 @Component({
   selector: 'app-notify-dashboard',
@@ -12,127 +10,104 @@ import { NotifyModel } from '../notify';
 
 })
 export class NotifyDashboardComponent implements OnInit {
-  
-  addForm!: NgForm;
+
+  PhotoFileName: any;
   notify: NotifyModel | undefined
   urls: string[] = [];
   @ViewChild('content') content !: boolean;
-  formValue !: FormGroup
+  @ViewChild('formValue') formValue !: FormGroup;
   notifyModelObj: NotifyModel = new NotifyModel()
-  notifyData: any
+  notifyData: any = [];
   showAdd !: boolean
   showUpdate!: boolean
   closeResult = ''
   todaydate = new Date()
-  parentClick: Subject<void> = new Subject<void>()
-  message : any;
+  message: any;
 
+  selectedFile !: File
   constructor(
-    private formBuilder: FormBuilder,
     private api: ApiService,
-    private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private http: HttpClient
+
   ) { }
 
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      title: [''],
-      description: [''],
-      content: [''],
-      start: [''],
-      end: [''],
-      login: [''],
-      display: [''],
-      activate: true,
-      //file: [''],
-    })
     this.getAllNotify();
-    this.api.currentMessage.subscribe(message => this.message = message)
+  }
+
+  onFileSelected(event: any) {
+
+    this.selectedFile = <File>event.target.files[0];
+    const filedata = new FormData();
+    filedata.append('files', this.selectedFile, this.selectedFile?.name)
+    this.http.post("http://localhost:57050/api/notify/upload", filedata).subscribe(
+      res => {
+        console.log(res);
+      }
+    )
+  }
+  onUpload(fileInput: any) {
+    var reader = new FileReader();
+    reader.readAsDataURL(fileInput.target.files[0]);
+    reader.onload = (events: any) => {
+      this.urls = [];
+      this.urls.push(events.target.result)
+    }
+    const file = fileInput.target.files[0];
+    this.notifyModelObj.PhotoFileName = file.name;
   }
 
   clickAddNotify() {
+    this.urls = [];
     this.formValue.reset()
     this.showAdd = true
     this.showUpdate = false
   }
-
+  onEdit(row: any) {
+    this.urls = [];
+    this.showAdd = false
+    this.showUpdate = true
+    this.notifyModelObj = row
+    this.urls.push("http://localhost:57050/Photos/" + row.PhotoFileName)
+  }
   postNotifyDatails() {
-    this.notifyModelObj.title = this.formValue.value.title
-    this.notifyModelObj.description = this.formValue.value.description
-    this.notifyModelObj.content = this.formValue.value.content
-    this.notifyModelObj.start = this.formValue.value.start
-    this.notifyModelObj.end = this.formValue.value.end
-    this.notifyModelObj.login = this.formValue.value.login
-    this.notifyModelObj.display = this.formValue.value.display
-    this.notifyModelObj.activate = this.formValue.value.activate
-    //this.notifyModelObj.file = this.formValue.value.file
-
+    this.urls = [];
     this.api.postNotify(this.notifyModelObj).subscribe(res => {
       console.log(res);
       alert("Notify Addded Successfully")
       let ref = document.getElementById('cancel')
       ref?.click()
-      this.formValue.reset()
+      this.notifyModelObj.PhotoFileName
       this.getAllNotify()
-    }, err => {
+    }, () => {
+      alert("Something Wrong")
+    })
+  }
+
+  updateNotifyDatails() {
+    this.api.updateNotify(this.notifyModelObj).subscribe(res => {
+      console.log(res);
+      alert("Notify Update Seccessfully")
+      let ref = document.getElementById('cancel')
+      ref?.click()
+      //this.formValue.reset()
+      this.getAllNotify()
+    }, () => {
       alert("Something Wrong")
     })
   }
 
   getAllNotify() {
     this.api.getNotify().subscribe(res => {
-      this.notifyData = res
+      this.notifyData = res;
     })
   }
   deleteNotify(row: any) {
-    this.api.deleteNotify(row.id).subscribe(res => {
+    this.api.deleteNotify(row.NotifyId).subscribe(() => {
       alert("Notify Deleted")
       this.getAllNotify()
     })
   }
-  onEdit(row: any) {
-    this.showAdd = false
-    this.showUpdate = true
-    this.notifyModelObj.id = row.id
-    this.formValue.controls['title'].setValue(row.title)
-    this.formValue.controls['description'].setValue(row.description)
-    this.formValue.controls['content'].setValue(row.content)
-    this.formValue.controls['start'].setValue(row.start)
-    this.formValue.controls['end'].setValue(row.end)
-    this.formValue.controls['login'].setValue(row.login)
-    this.formValue.controls['display'].setValue(row.display)
-    this.formValue.controls['activate'].setValue(row.activate)
-   // this.formValue.controls['file'].setValue(row.file)
 
-  }
-  updateNotifyDatails() {
-    this.notifyModelObj.title = this.formValue.value.title
-    this.notifyModelObj.description = this.formValue.value.description
-    this.notifyModelObj.content = this.formValue.value.content
-    this.notifyModelObj.start = this.formValue.value.start
-    this.notifyModelObj.end = this.formValue.value.end
-    this.notifyModelObj.login = this.formValue.value.login
-    this.notifyModelObj.display = this.formValue.value.display
-    this.notifyModelObj.activate = this.formValue.value.activate
-    //this.notifyModelObj.file = this.formValue.value.file
-
-    this.api.updateNotify(this.notifyModelObj, this.notifyModelObj.id)
-      .subscribe(res => {
-        alert("Update Seccessfully")
-        let ref = document.getElementById('cancel')
-        ref?.click()
-        this.formValue.reset()
-        this.getAllNotify()
-      })
-  }
-  onselectImage(e: any) {
-    if (e.target.files) {
-      for (let i = 0; i < File.length; i++) {
-        var reader = new FileReader();
-        reader.readAsDataURL(e.target.files[i]);
-        reader.onload = (events: any) => {
-          this.urls.push(events.target.result)
-        }
-      }
-    }
-  }
 }

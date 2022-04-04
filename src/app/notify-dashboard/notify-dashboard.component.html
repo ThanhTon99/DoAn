@@ -3,47 +3,62 @@
 
 <head>
   <title>Bootstrap Example</title>
+  <script src="../ckfinder.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
 
-  <nav class="navbar navbar-light bg-primary">
+  <nav class="navbar" style="background: linear-gradient(to right, rgb(36, 49, 105), rgb(7, 171, 226));">
     <div class="container-fluid">
-      <h1 style="color: aliceblue;">Angular CRUD</h1>
+      <h1 title="Đât là tiêu đề" style="color: aliceblue;">Angular CRUD</h1>
       <div class="d-flex">
-        <button routerLink="/notifymanage" class="btn btn-light mx-2"><i class="fas fa-bell"></i></button>      
-        <button (click)="clickAddNotify()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        <button title="Thông Báo" routerLink="/notifymanage" class="btn btn-light mx-2"><i class="fas fa-bell"></i></button>
+        <button title="Thêm Mới" (click)="clickAddNotify()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
           class="btn btn-success">Add Notify</button>
-        <button routerLink="/login" class="btn btn-danger mx-2">Logout</button>
+        <button title="Thoát" routerLink="/login" class="btn btn-danger mx-2">Logout</button>
       </div>
     </div>
   </nav>
-
+  <div class="background"></div>
   <div class="container-fluid">
-    <table class="table table-bordered mt-3">
-      <thead>
+    <table class="table table-bordered ">
+      <thead style="background-color: #5394b9">
         <tr>
           <th scope="col">Notify ID</th>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
-          <th scope="col">Start</th>
-          <th scope="col">End</th>
-          <th scope="col">Action</th>
+          <th scope="col">PhotoFileName</th>
+          <th scope="col">Activate</th>
+          <th scope="col">Display</th>
+          <th scope="col">Login</th>
+          <th scope="col">Link</th>
+          <th scope="col" style="width:12%">Action</th>
+          <!-- <th scope="col">Kiểu Thông Báo</th>
+          <th scope="col">Kích Hoạt</th>
+          <th scope="col">Action</th> -->
         </tr>
       </thead>
-      <tbody>
+      <tbody style="background-color: #d9e9e9">
         <tr *ngFor="let row of notifyData">
-          <td>{{row.id}}</td>
-          <td>{{row.title}}</td>
-          <!-- <td><div [innerHtml]="row.content"></div></td> -->
-          <td>{{row.description}}</td>
-          <td>{{row.start | date:'dd/MM/Y'}}</td>
+          <td>{{row.NotifyId}}</td>
+          <td>{{row.Title}}</td>
+          <td>{{row.Description}}</td>
+          <td>{{row.PhotoFileName}}</td>
+          <td>{{row.Activate}}</td>
+          <td>{{row.Display}}</td>
+          <td>{{row.Login}}</td>
+          <td>{{row.Link}}</td>
+          <!-- <td><div [innerHtml]="row.Content"></div></td> -->
+          <!-- <td>{{row.start | date:'dd/MM/Y'}}</td>
           <td>{{row.end | date:'dd/MM/Y'}}</td>
+          <td>{{row.display}}</td>
+          <td>{{row.login}}</td>
+          <td>{{row.activate}}</td> -->
           <td>
-            <button (click)="onEdit(row)" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            <button title="Thêm" (click)="onEdit(row)" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
               class="btn btn-info">Edit</button>
-            <button (click)="deleteNotify(row)" class="btn btn-danger mx-2">Delete</button>
+            <button  title="Xóa" (click)="deleteNotify(row)" class="btn btn-danger mx-2">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -59,69 +74,77 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="formValue" >
+          <form #formValue="ngForm">
             <div class="card-body">
+
               <div class="form-group col-md-12 ">
-                <label for="title">Title<a id="sao"> (*)</a></label>
-                <input [class.is-invalid]="formValue.invalid && formValue.touched" type="text" required formControlName="title"
-                 class="form-control" name="title" placeholder="Tiêu Đề">
-                <small *ngIf="formValue.invalid && formValue.touched" class="form-text text-danger">Yêu cầu điền thông tin</small>
+                <label for="title">Tiêu Đề<a id="sao"> (*)</a></label>
+                <input [class.is-invalid]="Title.invalid && Title.touched" type="text" required
+                  [(ngModel)]="notifyModelObj.Title" #Title="ngModel" class="form-control" name="Title"
+                  placeholder="Tiêu Đề">
+                <small *ngIf="formValue.invalid && formValue.touched" class="form-text text-danger">Yêu cầu điền thông
+                  tin</small>
               </div>
 
               <div class="form-group col-md-12">
                 <label>Mô Tả</label>
-                <input type="text" formControlName="description" class="form-control" name="mota" placeholder="Mô Tả">
+                <input type="text" [(ngModel)]="notifyModelObj.Description" class="form-control" name="Description"
+                  placeholder="Mô Tả">
                 <small class="form-text text-danger"></small>
               </div>
 
               <div class="form-group col-12 ">
-                <label>Công Ty</label>
-                <input type="text" class="form-control" name="congty" placeholder="Công Ty">
+                <label>Link</label>
+                <input type="text" [(ngModel)]="notifyModelObj.Link" class="form-control" name="Department"
+                  placeholder="http://...">
                 <small class="form-text text-muted"></small>
               </div>
 
               <div class="form-group col-12 ">
                 <label>Nội Dung</label>
-                <ckeditor formControlName="content"></ckeditor>
+                <ckeditor [(ngModel)]="notifyModelObj.Content" name="Content"></ckeditor>
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label>Kiểu Hiển Thị</label>
-                  <select class="form-control" formControlName="display">
-                    <option value="tintuc" >Tin Tức</option>
-                    <option value="thongbao" selected="selected" >Thông Báo</option>
+                  <!-- [ngModel]="notifyModelObj.display" -->
+                  <select class="form-control" [(ngModel)]="notifyModelObj.Display" name="display">
+                    <option value="tintuc">Tin Tức</option>
+                    <option value="thongbao" selected="selected">Thông Báo</option>
                     <option value="slide">Slide Ảnh</option>
                   </select>
-                  <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu hiển thị</small>
+                  <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu hiển
+                    thị</small>
                 </div>
 
                 <div class="form-group col-md-4">
                   <label>Kiểu Thông Báo</label>
-                  <select class="form-control" formControlName="login" id="login">
+                  <select class="form-control" [(ngModel)]="notifyModelObj.Login" name="login">
                     <option value="truoc">Trước Khi Đăng Nhập</option>
                     <option value="sau">Sau Khi Đăng Nhập</option>
                   </select>
-                  <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu thông báo</small>
+                  <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu thông
+                    báo</small>
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-4">
-                  <label for="name">Bắt Đầu <a id="sao">(*)</a></label>
-                  <input type="date" formControlName="start" class="form-control">
+                  <label for="name">Bắt Đầu <a id="sao"></a></label>
+                  <input type="date" class="form-control" name="start">
                   <small class="form-text text-danger" name="start"></small>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="name">Kết Thúc <a id="sao">(*)</a></label>
-                  <input type="date" formControlName="end" class="form-control">
+                  <label for="name">Kết Thúc <a id="sao"></a></label>
+                  <input type="date" class="form-control" name="end">
                   <small class="form-text text-danger" name="end"></small>
                 </div>
               </div>
 
               <div class="form-row ">
                 <div class="form-group col-md-2">Kích Hoạt
-                  <input type="checkbox" formControlName="activate">
+                  <input type="checkbox" [(ngModel)]="notifyModelObj.Activate" name="activate">
                 </div>
                 <div class="form-group col-md-2">Cho phép hết hạn
                   <input type="checkbox" />
@@ -130,24 +153,39 @@
 
               <div class="form-row">
                 <div class="form-group col-md-4">
-                  <label for="formFile" class="form-label">Đính Kèm<input class="form-control" type="file" 
-                      id="formFile"></label>
+                  <label for="formFile" class="form-label">
+
+                    <input type="text" name="PhotoFileName" id="PhotoFileName"
+                      style="border: #ffffff; background: none;" [(ngModel)]="notifyModelObj.PhotoFileName"
+                      disabled><br><br>
+                    <input class="form-control" [(ngModel)]="notifyModelObj.PhotoFileName" name="PhotoFileName"
+                      (change)="onUpload($event)" (change)="onFileSelected($event)" type="file" id="file">
+                  </label>
                 </div>
-                <div class="form-group col-md-4">
-                  <!-- <label for="formFile" class="form-label">Ảnh<input class="form-control" type="file" id="formFile"></label> -->
-                  <img *ngFor='let url of urls' [src]="url" height="100" width="100">Ảnh<br>
-                  <input type="file" (change)="onselectImage($event)" multiple>
+                
+                <div class="form-group col-md-2">
+                  <label for="image">
+                    <img *ngFor='let url of urls' [src]="url" height="130" width="150">
+                  </label>
                 </div>
+                <!-- <div class="form-group col-md-4">
+                   <img *ngFor='let url of urls' [src]="url" height="100" width="100"><br> 
+                  <label for="formFile" class="form-label">Chọn Ảnh Lưu
+                     <img *ngFor='let url of urls' [src]="url" height="100" width="100"> 
+                    <input class="form-control" type="file" id="file" (change)="onFileSelected($event)">
+                     <input type="button" value="upload" (click)="onUpload()"> 
+                  </label> 
+                </div>-->
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
+          <button (click)="postNotifyDatails()" type="submit" *ngIf="showAdd" value="Submit"
+            [disabled]="formValue.invalid" class="btn btn-primary">Add</button>
+          <button (click)="updateNotifyDatails()" type="submit" *ngIf="showUpdate" value="Submit"
+            [disabled]="formValue.invalid" class="btn btn-primary">Update</button>
           <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button (click)="postNotifyDatails()" type="submit" *ngIf="showAdd" value="Submit" [disabled]="formValue.invalid"
-            class="btn btn-primary">Add</button>
-          <button (click)="updateNotifyDatails()" type="submit" *ngIf="showUpdate" value="Submit" [disabled]="formValue.invalid"
-            class="btn btn-primary">Update</button>
         </div>
       </div>
     </div>
