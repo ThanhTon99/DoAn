@@ -39,37 +39,6 @@
     </form>
   </div>
 
-  <!-- carousel-fade -->
-  <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    
-    <ul class="carousel-indicators">
-     <li data-target="#carouselExampleControls" data-slide-to="0"></li>
-      <li data-target="#carouselExampleControls" data-slide-to="1"></li>
-      <li data-target="#carouselExampleControls" data-slide-to="2"></li>
-      <li data-target="#carouselExampleControls" data-slide-to="3"></li> 
-       <li data-target="#carouselExampleControls" data-slide-to="4"></li>
-    </ul>
-    
-    <div class="carousel-inner">
-      <div class="carousel-item" *ngFor="let row of notifyImage">
-        <div class="cards-wrapper">
-          <div class="card">
-            <a href="{{row.Link}}" target="_blank">
-              <img  src="http://localhost:57050/Photos/{{row.PhotoFileName}}"></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-item active">
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </a>
-  </div> -->
-
   <!-- Slide Show -->
   <carousel [noWrap]="false" [isAnimated]="true" [interval]="5000" style=" display:block; width: 60%; margin-left: 5%; ">
     <slide class="container" *ngFor="let row of notifyImage" style="margin-left: 11%; margin-top: 8%;">

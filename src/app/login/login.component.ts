@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       Username: [''],
       Password: [''],
+      Permission: [''],
       Login: ['truoc'],
       Display: [''],
       Activate: true,    
@@ -86,10 +87,16 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         const user = res.find((a: any) => {
           return a.Username === this.loginForm.value.Username && a.Password === this.loginForm.value.Password
+          
         })
+        // const user2 = res.find((b:any)=>{
+        //   return b.Username === this.loginForm.value.Username && b.Password === this.loginForm.value.Password 
+        //   && b.Permission == ['member']
+        // })
         if (user) {
           this.loginForm.reset()
           this.router.navigate(['dashboard'])
+          
           this.http.get<any>("http://localhost:57050/api/notify").subscribe(res => {
             const time = res.find((a: any) => {
               return a.Login == ['sau'] && a.Activate == true && a.Display == ['tintuc']

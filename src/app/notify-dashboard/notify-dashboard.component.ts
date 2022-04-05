@@ -14,15 +14,19 @@ export class NotifyDashboardComponent implements OnInit {
   PhotoFileName: any;
   notify: NotifyModel | undefined
   urls: string[] = [];
-  @ViewChild('content') content !: boolean;
   @ViewChild('formValue') formValue !: FormGroup;
   notifyModelObj: NotifyModel = new NotifyModel()
   notifyData: any = [];
   showAdd !: boolean
   showUpdate!: boolean
+  btAdd !: boolean
+  btDelete !: boolean
+  btUpdate !: boolean
   closeResult = ''
   todaydate = new Date()
   message: any;
+  filter: any;
+  showMessage: boolean = true
 
   selectedFile !: File
   constructor(
@@ -34,6 +38,26 @@ export class NotifyDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllNotify();
+
+    this.http.get<any>("http://localhost:57050/api/department/permission")
+      .subscribe(res => {
+        const user = res.find((a: any) => {
+          return a.Permission == ['admin']
+        })
+        const user1 = res.find((a: any) => {
+          return a.Permission == ['member']
+        })
+        if (user) {
+          this.btAdd = true;
+          this.btDelete = true;
+          this.btUpdate = true;
+        }
+        if (user1) {
+          this.btAdd = false;
+          this.btDelete = false;
+          this.btUpdate = false;
+        }
+      })
   }
 
   onFileSelected(event: any) {
@@ -75,10 +99,10 @@ export class NotifyDashboardComponent implements OnInit {
     this.urls = [];
     this.api.postNotify(this.notifyModelObj).subscribe(res => {
       console.log(res);
-      alert("Notify Addded Successfully")
+      alert("Notify Added Successfully")
       let ref = document.getElementById('cancel')
       ref?.click()
-      this.notifyModelObj.PhotoFileName
+      // this.notifyModelObj.PhotoFileName
       this.getAllNotify()
     }, () => {
       alert("Something Wrong")

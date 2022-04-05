@@ -3,7 +3,6 @@
 
 <head>
   <title>Bootstrap Example</title>
-  <script src="../ckfinder.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -13,15 +12,27 @@
     <div class="container-fluid">
       <h1 title="Đât là tiêu đề" style="color: aliceblue;">Angular CRUD</h1>
       <div class="d-flex">
-        <button title="Thông Báo" routerLink="/notifymanage" class="btn btn-light mx-2"><i class="fas fa-bell"></i></button>
-        <button title="Thêm Mới" (click)="clickAddNotify()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-          class="btn btn-success">Add Notify</button>
+        <button title="Thông Báo" routerLink="/notifymanage" class="btn btn-light mx-2" *ngIf="showMessage"><i
+            class="fas fa-bell"></i></button>
+        <button title="User" routerLink="/user" class="btn btn-light mx-2"><i
+            class="fab fa-angellist"></i></button>
+        <button title="Thêm Mới" (click)="clickAddNotify()" *ngIf="btAdd" type="button" data-bs-toggle="modal"
+          data-bs-target="#exampleModal" class="btn btn-success">Add Notify</button>
         <button title="Thoát" routerLink="/login" class="btn btn-danger mx-2">Logout</button>
       </div>
     </div>
   </nav>
   <div class="background"></div>
   <div class="container-fluid">
+    <br>
+    <div class="col-md-3 form-group pull-right" style="margin-right:7% ;">
+      <div class="input-group">
+        <input type="text" class="form-control" name="filter" [(ngModel)]="filter" placeholder=" Search...">
+        <span>
+          <button class="btn mx-1" type="button" style="background-color: #5ecaca;">Tìm Kiếm</button>
+        </span>
+      </div>
+    </div>
     <table class="table table-bordered ">
       <thead style="background-color: #5394b9">
         <tr>
@@ -40,7 +51,7 @@
         </tr>
       </thead>
       <tbody style="background-color: #d9e9e9">
-        <tr *ngFor="let row of notifyData">
+        <tr *ngFor="let row of notifyData | filter:filter">
           <td>{{row.NotifyId}}</td>
           <td>{{row.Title}}</td>
           <td>{{row.Description}}</td>
@@ -56,9 +67,9 @@
           <td>{{row.login}}</td>
           <td>{{row.activate}}</td> -->
           <td>
-            <button title="Thêm" (click)="onEdit(row)" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-              class="btn btn-info">Edit</button>
-            <button  title="Xóa" (click)="deleteNotify(row)" class="btn btn-danger mx-2">Delete</button>
+            <button title="Sửa" *ngIf="btUpdate" (click)="onEdit(row)" type="button" data-bs-toggle="modal"
+              data-bs-target="#exampleModal" class="btn btn-info">Edit</button>
+            <button title="Xóa" *ngIf="btDelete" (click)="deleteNotify(row)" class="btn btn-danger mx-2">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -76,7 +87,6 @@
         <div class="modal-body">
           <form #formValue="ngForm">
             <div class="card-body">
-
               <div class="form-group col-md-12 ">
                 <label for="title">Tiêu Đề<a id="sao"> (*)</a></label>
                 <input [class.is-invalid]="Title.invalid && Title.touched" type="text" required
@@ -111,7 +121,7 @@
                   <!-- [ngModel]="notifyModelObj.display" -->
                   <select class="form-control" [(ngModel)]="notifyModelObj.Display" name="display">
                     <option value="tintuc">Tin Tức</option>
-                    <option value="thongbao" selected="selected">Thông Báo</option>
+                    <option value="thongbao">Thông Báo</option>
                     <option value="slide">Slide Ảnh</option>
                   </select>
                   <small class="form-text text-muted" *ngIf="formValue.invalid && formValue.untouched">Chọn kiểu hiển
@@ -162,7 +172,7 @@
                       (change)="onUpload($event)" (change)="onFileSelected($event)" type="file" id="file">
                   </label>
                 </div>
-                
+
                 <div class="form-group col-md-2">
                   <label for="image">
                     <img *ngFor='let url of urls' [src]="url" height="130" width="150">

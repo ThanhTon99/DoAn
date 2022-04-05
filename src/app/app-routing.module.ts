@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { NotifyDashboardComponent } from './notify-dashboard/notify-dashboard.component';
 import { NotifyManageComponent } from './notify-manage/notify-manage.component';
 import { SignupComponent } from './signup/signup.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'login', pathMatch:'full'},
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'dashboard', component: NotifyDashboardComponent},
   {path: 'notifymanage',component: NotifyManageComponent},
+  {path: 'user', component:UserComponent},
 ];
 
 @NgModule({

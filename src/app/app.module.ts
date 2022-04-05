@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,14 +11,17 @@ import { SignupComponent } from './signup/signup.component';
 import { ApiService } from './api.service';
 import { NotifyManageComponent } from './notify-manage/notify-manage.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { UserComponent } from './user/user.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
-  declarations: [					
+  declarations: [								
     AppComponent,
       NotifyDashboardComponent,
       LoginComponent,
       SignupComponent,
       NotifyManageComponent,
+      UserComponent
    ],
   imports: [
     BrowserModule,  
@@ -26,9 +29,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule, 
+    Ng2SearchPipeModule,
     CKEditorModule, CarouselModule.forRoot(), 
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [ApiService],
   bootstrap: [AppComponent] 
 })

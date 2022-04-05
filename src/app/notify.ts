@@ -1,6 +1,3 @@
-import { empty } from "rxjs";
-
-
 export class NotifyModel{
 
     NotifyId : number | undefined ;
